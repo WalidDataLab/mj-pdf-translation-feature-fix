@@ -55,11 +55,6 @@ The APK targets 64-bit ARM phones (almost every phone from the last few years), 
 
 Reading an unfamiliar Kotlin/Android codebase, release and version analysis, CI/CD with GitHub Actions, native NDK builds, APK signing, and reproducible builds based on patches.
 
-## الملخص بالعربي
-
-مشكلة: كل ما بدّي ترجم نص بـ MJ PDF، التطبيق بيطلب منّي اختار تطبيق الترجمة من جديد.
-الحل: لقيت إنو الميزة موجودة بآخر كود للتطبيق بس لسا ما نزلت على Google Play. عملت نظام بناء تلقائي على GitHub Actions بينزّل الكود، وبيبني التطبيق مع مكتبة PDFium وتعديلات العربي، وبيوقّعه وبينشره كملف APK. النسخة بتتثبّت جنب نسخة Play باسم **MJ PDF Fix**، ومن الإعدادات بختار تطبيق الترجمة مرة وحدة وبيضل ثابت.
-
 ## License and credit
 
 MJ PDF is © Mudlej and contributors, licensed under **GPLv3**. This project only automates building it, with the small changes listed above, and is distributed under the same license. All credit for the app goes to the original author: https://mudlej.com/projects/mj-pdf
