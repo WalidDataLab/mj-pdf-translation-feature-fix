@@ -37,7 +37,7 @@ The repository does not copy the app's source. It holds a small, reproducible bu
 2. Download the upstream source from GitLab.
 3. Apply `ci/apply_changes.py`.
 4. Install the pinned Android SDK parts: platform 36, build tools 36.0.0, NDK 28.2, CMake 3.22.1.
-5. Build **PDFium from source with MJ PDF's Arabic text patches** for `arm64-v8a`, cached between runs. The first build takes about an hour; later builds take a few minutes.
+5. Build **PDFium from source with MJ PDF's Arabic text patches** for every ABI, cached between runs. The first build takes about an hour; later builds take a few minutes.
 6. Build the release APK with R8 minification.
 7. Sign it with `apksigner` and publish it as a GitHub release.
 8. If a step fails, save the last 400 log lines to `logs/last-failure.log` so the failure can be diagnosed without opening the Actions UI.
@@ -49,7 +49,7 @@ The repository does not copy the app's source. It holds a small, reproducible bu
 3. In **MJ PDF Fix**, go to **Settings → Translation**, set *Translate with* to **Installed apps**, then set **Translation app** to your translator.
 4. Optional: in the Play version, make a **Backup** from its settings, then restore it in MJ PDF Fix to bring your library and bookmarks over.
 
-The APK targets 64-bit ARM phones (almost every phone from the last few years), on Android 6.0 or newer.
+The APK is universal: it runs on 32-bit and 64-bit phones, on Android 6.0 or newer.
 
 ## Skills shown
 

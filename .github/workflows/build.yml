@@ -15,7 +15,8 @@ concurrency:
 
 env:
   UPSTREAM_ZIP: https://gitlab.com/mudlej_android/mj_pdf_reader/-/archive/main/mj_pdf_reader-main.zip
-  ABI: arm64-v8a
+  # Every ABI, so the universal APK runs on 32-bit and 64-bit phones.
+  ABI: all
   NDK_VERSION: 28.2.13676358
   # Signing key for this personal build (private repository).
   KEYSTORE_PASSWORD: 31b574ec578252f8ae1bde36ea66e75c
@@ -88,7 +89,7 @@ jobs:
         run: |
           set -o pipefail
           chmod +x gradlew
-          ./gradlew :app:assembleRelease -PfdroidAbi="$ABI" --no-daemon --stacktrace 2>&1 | tee -a ../build.log | tail -200
+          ./gradlew :app:assembleRelease --no-daemon --stacktrace 2>&1 | tee -a ../build.log | tail -200
 
       - name: Prepare signing key (created once, then reused)
         run: |
@@ -107,7 +108,7 @@ jobs:
       - name: Sign APK
         run: |
           set -o pipefail
-          unsigned=$(find src/app/build/outputs/apk/release -name '*.apk' | head -n1)
+          unsigned=$(find src/app/build/outputs/apk/release -name '*universal*.apk' | head -n1)
           echo "Unsigned APK: $unsigned" | tee -a build.log
           "$ANDROID_HOME/build-tools/36.0.0/apksigner" sign \
             --ks ci/release.p12 --ks-type PKCS12 --ks-pass env:KEYSTORE_PASSWORD --ks-key-alias "$KEY_ALIAS" \
@@ -125,7 +126,7 @@ jobs:
         run: |
           gh release create "build-${{ github.run_number }}" MJ-PDF-Fix.apk \
             --title "MJ PDF Fix - build ${{ github.run_number }}" \
-            --notes "arm64-v8a APK built from upstream MJ PDF main with the changes in ci/apply_changes.py. Download MJ-PDF-Fix.apk below and install it on the phone."
+            --notes "Universal APK (arm64-v8a, armeabi-v7a, x86, x86_64) built from upstream MJ PDF main with the changes in ci/apply_changes.py. Download MJ-PDF-Fix.apk below and install it on the phone."
 
       - name: Save build log on failure
         if: failure()
